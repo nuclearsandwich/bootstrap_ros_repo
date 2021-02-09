@@ -1,7 +1,7 @@
 FROM osrf/ros:noetic-desktop-full-focal
 ARG pkgs
 RUN apt-get update \
-    && apt-get install -y ros-noetic-desktop-full apt-rdepends \
+    && apt-get install -y ros-foxy-desktop apt-rdepends \
     && rm -rf /var/lib/apt/lists/*
 ENV pkgs=$pkgs
 ENTRYPOINT /usr/bin/apt-rdepends -r ${pkgs} | grep 'Reverse Depends:' | awk '{print $3}' | sort | uniq | tr '\r\n' ',' | sed 's:,:, :g'
