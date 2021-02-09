@@ -30,3 +30,8 @@ jobs:
           file: ./Dockerfile
           build-args: |
             pkgs=${{ matrix.packages }}
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Reverse deps for ${{ matrix.packages }}
+          path: reverse_deps.txt
