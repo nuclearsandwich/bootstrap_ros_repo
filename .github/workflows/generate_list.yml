@@ -3,23 +3,22 @@ name: Ubuntu
 
 on: [push]
 
-strategy:
-  matrix:
-    packages:
-      - "libceres-dev libceres1 ceres-solver-doc"
-      - "gurumdds-2.6 gurumdds-2.7"
-      - "python3-lark-parser python3-lark-parser-doc"
-      - "libopensplice67 libopensplice69"
-      - "libpcl-doc"
-      - "python-pyside2.qtgui python-pyside2.qtsvg python-pyside2.qtprintsupport-dbg python-pyside2.qtwidgets-dbg python-pyside2.qtuitools-dbg python-pyside2.qtscript-dbg python-pyside2.qthelp-dbg python-pyside2.qtnetwork-dbg python-pyside2.qtconcurrent-dbg python-pyside2-dbg python-pyside2.qtsql-dbg python-pyside2.qtquick-dbg python-pyside2.qtwebkit-dbg python-pyside2.qtsql python-pyside2.qtx11extras-dbg python-pyside2.qtprintsupport python-pyside2.qtgui-dbg python-pyside2.qtsvg-dbg python-pyside2.qtwebkitwidgets-dbg python-pyside2.qtcore-dbg python-pyside2.qtconcurrent python-pyside2 python-pyside2.qttest python-pyside2.qtquickwidgets python-pyside2.qtqml-dbg python-pyside2.qtquick python-pyside2.qtqml python-pyside2.qtx11extras libpyside2-dev python-pyside2.qtxml-dbg python-pyside2.qttest-dbg python-pyside2.qtquickwidgets-dbg python-pyside2.qtwebkit python-pyside2.qtwidgets python-pyside2.qtuitools libpyside2.0"
-      - "python3-pytest-runner"
-      - "python3-colcon-cmake python3-colcon-core python3-colcon-ed python3-colcon-lcov-result python3-colcon-package-selection python3-colcon-python-setup-py python3-colcon-ros"
-      - "rti-connext-dds-5.3.1"
-
 jobs:
   kinetic-xenial-ci:
     runs-on: ubuntu-xenial
     name: Ubuntu Xenial/Kinetic
+    strategy:
+      matrix:
+        packages:
+          - "libceres-dev libceres1 ceres-solver-doc"
+          - "gurumdds-2.6 gurumdds-2.7"
+          - "python3-lark-parser python3-lark-parser-doc"
+          - "libopensplice67 libopensplice69"
+          - "libpcl-doc"
+          - "python-pyside2.qtgui python-pyside2.qtsvg python-pyside2.qtprintsupport-dbg python-pyside2.qtwidgets-dbg python-pyside2.qtuitools-dbg python-pyside2.qtscript-dbg python-pyside2.qthelp-dbg python-pyside2.qtnetwork-dbg python-pyside2.qtconcurrent-dbg python-pyside2-dbg python-pyside2.qtsql-dbg python-pyside2.qtquick-dbg python-pyside2.qtwebkit-dbg python-pyside2.qtsql python-pyside2.qtx11extras-dbg python-pyside2.qtprintsupport python-pyside2.qtgui-dbg python-pyside2.qtsvg-dbg python-pyside2.qtwebkitwidgets-dbg python-pyside2.qtcore-dbg python-pyside2.qtconcurrent python-pyside2 python-pyside2.qttest python-pyside2.qtquickwidgets python-pyside2.qtqml-dbg python-pyside2.qtquick python-pyside2.qtqml python-pyside2.qtx11extras libpyside2-dev python-pyside2.qtxml-dbg python-pyside2.qttest-dbg python-pyside2.qtquickwidgets-dbg python-pyside2.qtwebkit python-pyside2.qtwidgets python-pyside2.qtuitools libpyside2.0"
+          - "python3-pytest-runner"
+          - "python3-colcon-cmake python3-colcon-core python3-colcon-ed python3-colcon-lcov-result python3-colcon-package-selection python3-colcon-python-setup-py python3-colcon-ros"
+          - "rti-connext-dds-5.3.1"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
