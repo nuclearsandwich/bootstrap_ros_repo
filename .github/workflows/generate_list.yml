@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: false
-          file: ./Dockerfile
+          file: ./Dockerfile.xenial
           tags: generator:latest
           build-args: |
             pkgs=${{ matrix.packages }}
@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: false
-          file: ./Dockerfile
+          file: ./Dockerfile.bionic
           tags: generator:latest
           build-args: |
             pkgs=${{ matrix.packages }}
