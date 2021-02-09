@@ -4,5 +4,4 @@ RUN apt-get update \
     && apt-get install -y ros-melodic-desktop-full apt-rdepends \
     && rm -rf /var/lib/apt/lists/*
 ENV pkgs=$pkgs
-# apt-rdepends -r python-pyside2.qtconcurrent | grep -v 'Reverse Depends:' | tr '\r\n'
-ENTRYPOINT /usr/bin/apt-rdepends -r ${pkgs}
+ENTRYPOINT /usr/bin/apt-rdepends -r ${pkgs} | grep -v 'Reverse Depends:' | tr '\r\n'
