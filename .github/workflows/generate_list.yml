@@ -38,3 +38,35 @@ jobs:
         with:
           name: Reverse deps for ${{ matrix.packages }}
           path: reverse_deps.txt
+
+  melodic-bionic-ci:
+    runs-on: ubuntu-latest
+    name: Ubuntu Bionic/Melodic
+    strategy:
+      matrix:
+        packages:
+          - "gazebo9-plugin-base gazebo9-doc libgazebo9 libgazebo9-dev gazebo9 gazebo9-common"
+          - "gurumdds-2.6 gurumdds-2.7"
+          - "libopensplice67 libopensplice69"
+          - "python-pyside2.qtwebkit-dbg python-pyside2.qtwebkitwidgets-dbg python-pyside2.qtwebkit python-pyside2.qtwebkitwidgets"
+          - "python3-colcon-cmake python3-colcon-core python3-colcon-ed python3-colcon-lcov-result python3-colcon-output python3-colcon-package-selection python3-colcon-python-setup-py python3-colcon-ros"
+          - "rti-connext-dds-5.3.1 "
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          file: ./Dockerfile
+          tags: generator:latest
+          build-args: |
+            pkgs=${{ matrix.packages }}
+      - name: Run docker to get output
+        run: docker run generator:latest --log-driver=none -a stderr -a stdout > reverse_deps
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Reverse deps for ${{ matrix.packages }}
+          path: reverse_deps.txt
