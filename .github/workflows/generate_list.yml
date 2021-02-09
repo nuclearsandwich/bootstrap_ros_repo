@@ -5,7 +5,7 @@ on: [push]
 
 jobs:
   kinetic-xenial-ci:
-    runs-on: ubuntu-xenial
+    runs-on: ubuntu-latest
     name: Ubuntu Xenial/Kinetic
     strategy:
       matrix:
