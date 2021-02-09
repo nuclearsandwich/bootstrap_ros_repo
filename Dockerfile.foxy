@@ -1,4 +1,4 @@
-FROM osrf/ros:noetic-desktop-full-focal
+FROM osrf/ros:foxy-desktop-focal
 ARG pkgs
 RUN apt-get update \
     && apt-get install -y ros-foxy-desktop apt-rdepends \
