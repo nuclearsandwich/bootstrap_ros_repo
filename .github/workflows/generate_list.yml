@@ -31,8 +31,8 @@ jobs:
           tags: generator:latest
           build-args: |
             pkgs=${{ matrix.packages }}
-      - name: Run docker
-        run: docker run generator:latest -v /tmp/output:/
+      - name: Run docker to get output
+        run: docker run generator:latest --log-driver=none -a stderr -a stdout > reverse_deps
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
