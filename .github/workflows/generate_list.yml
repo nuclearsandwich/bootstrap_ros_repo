@@ -79,6 +79,42 @@ jobs:
           name: Reverse dependencies Bionic ${{steps.short-name.outputs.id}}
           path: reverse_deps.txt
 
+  dashing-bionic-ci:
+    runs-on: ubuntu-latest
+    name: Ubuntu Bionic/Dashing
+    strategy:
+      matrix:
+        packages:
+          - "gazebo9-plugin-base gazebo9-doc libgazebo9 libgazebo9-dev gazebo9 gazebo9-common"
+          - "gurumdds-2.6 gurumdds-2.7"
+          - "libopensplice67 libopensplice69"
+          - "python-pyside2.qtwebkit-dbg python-pyside2.qtwebkitwidgets-dbg python-pyside2.qtwebkit python-pyside2.qtwebkitwidgets"
+          - "python3-colcon-cmake python3-colcon-core python3-colcon-ed python3-colcon-lcov-result python3-colcon-output python3-colcon-package-selection python3-colcon-python-setup-py python3-colcon-ros"
+          - "rti-connext-dds-5.3.1 "
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          file: ./Dockerfile.dashing
+          tags: generator:latest
+          build-args: |
+            pkgs=${{ matrix.packages }}
+      - name: Run docker to get output
+        run: docker run generator:latest --log-driver=none -a stderr -a stdout > reverse_deps.txt
+      - id: short-name
+        run: |
+          id=$(echo ${{ matrix.packages }} | cut -d ' ' -f1)
+          echo "::set-output name=id::$id"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Reverse dependencies Bionic ${{steps.short-name.outputs.id}}
+          path: reverse_deps.txt
+
   noetic-focal-ci:
     runs-on: ubuntu-latest
     name: Ubuntu Focal/Noetic
@@ -100,6 +136,42 @@ jobs:
         with:
           push: false
           file: ./Dockerfile.focal
+          tags: generator:latest
+          build-args: |
+            pkgs=${{ matrix.packages }}
+      - name: Run docker to get output
+        run: docker run generator:latest --log-driver=none -a stderr -a stdout > reverse_deps.txt
+      - id: short-name
+        run: |
+          id=$(echo ${{ matrix.packages }} | cut -d ' ' -f1)
+          echo "::set-output name=id::$id"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Reverse dependencies Focal ${{steps.short-name.outputs.id}}
+          path: reverse_deps.txt
+
+  foxy-focal-ci:
+    runs-on: ubuntu-latest
+    name: Ubuntu Focal/Foxy
+    strategy:
+      matrix:
+        packages:
+          - "gurumdds-2.6 gurumdds-2.7"
+          - "libignition-cmake2-dev libignition-common3-profiler libignition-common3-graphics-dev libignition-common3-av libignition-common3-events-dev libignition-common3-dev libignition-common3-profiler-dev libignition-common3-events libignition-common3 libignition-common3-graphics libignition-common3-core-dev libignition-common3-av-dev libignition-fuel-tools4 libignition-fuel-tools4-dev libignition-gazebo3-plugins libignition-gazebo3 libignition-gazebo3-dev libignition-gui3 libignition-gui3-dev libignition-launch2 libignition-launch2-dev libignition-math6-eigen3-dev libignition-math6-dev libignition-math6-dbg libignition-math6 libignition-msgs5 libignition-msgs5-dev libignition-physics2-tpe libignition-physics2-tpe-dev libignition-physics2-core-dev libignition-physics2-tpelib libignition-physics2-dev libignition-physics2 libignition-physics2-dartsim-dev libignition-physics2-dartsim libignition-physics2-mesh-dev libignition-physics2-tpelib-dev libignition-physics2-sdf-dev libignition-plugin-dev libignition-plugin libignition-rendering3-dev libignition-rendering3-ogre2 libignition-rendering3-ogre1 libignition-rendering3-core-dev libignition-rendering3-ogre2-dev libignition-rendering3-ogre1-dev libignition-rendering3 libignition-sensors3-magnetometer-dev libignition-sensors3-air-pressure libignition-sensors3-dev libignition-sensors3-depth-camera-dev libignition-sensors3-depth-camera libignition-sensors3-gpu-lidar-dev libignition-sensors3-thermal-camera-dev libignition-sensors3-air-pressure-dev libignition-sensors3-imu libignition-sensors3-camera-dev libignition-sensors3-altimeter libignition-sensors3-rgbd-camera-dev libignition-sensors3-imu-dev libignition-sensors3-gpu-lidar libignition-sensors3-core-dev libignition-sensors3-logical-camera-dev libignition-sensors3-lidar libignition-sensors3-thermal-camera libignition-sensors3-rendering-dev libignition-sensors3-logical-camera libignition-sensors3-rgbd-camera libignition-sensors3-rendering libignition-sensors3-altimeter-dev libignition-sensors3 libignition-sensors3-magnetometer libignition-sensors3-lidar-dev libignition-sensors3-camera libignition-transport8-core-dev libignition-transport8-log-dev libignition-transport8-log libignition-transport8-dev libignition-transport8-dbg libignition-transport8"
+          - "libogre-2.1 libogre-2.1-dev"
+          - "python3-colcon-bazel python3-colcon-cmake python3-colcon-core python3-colcon-ed python3-colcon-lcov-result python3-colcon-output python3-colcon-package-selection python3-colcon-python-setup-py python3-colcon-ros"
+          - "rti-connext-dds-5.3.1"
+          - "sdformat9-sdf sdformat9-doc libsdformat9 libsdformat9-dev libsdformat9-dbg"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          file: ./Dockerfile.foxy
           tags: generator:latest
           build-args: |
             pkgs=${{ matrix.packages }}
