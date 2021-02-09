@@ -1,4 +1,4 @@
-FROM osrf/ros:dashing-desktop-bionic
+FROM osrf/ros:dashing-core-bionic
 ARG pkgs
 RUN apt-get update \
     && apt-get install -y ros-dashing-desktop apt-rdepends \
