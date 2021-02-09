@@ -28,12 +28,11 @@ jobs:
         with:
           push: false
           file: ./Dockerfile
+          tags: generator:latest
           build-args: |
             pkgs=${{ matrix.packages }}
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-      - name: Export artifact to base system
-        run: docker cp ${{ steps.docker_build.outputs.digest }}/tmp/reverse_deps.txt reverse_deps.txt
+      - name: Run docker
+        run: docker run generator:latest -v /tmp/output:/
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
