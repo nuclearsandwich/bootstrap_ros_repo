@@ -1,7 +1,7 @@
 FROM osrf/ros:foxy-desktop
 ARG pkgs
 RUN apt-get update \
-    && apt-cache pkgnames | awk '/-dbgsym$/ { next } /^ros-foxy-ros1-bridge/ { next } /^ros-foxy-/ { print }' > /tmp/ros2pkgs \
+    && apt-cache pkgnames | awk '/-dbgsym$/ { next } /^ros-foxy-(ros1-bridge|rosbag2-bag-v2-plugins)/ { next } /^ros-foxy-/ { print }' > /tmp/ros2pkgs \
     && apt-get install -y apt-rdepends $(cat /tmp/ros2pkgs) \
     && rm -rf /var/lib/apt/lists/*
 ENV pkgs=$pkgs
