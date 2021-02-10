@@ -1,7 +1,7 @@
 FROM osrf/ros:dashing-desktop
 ARG pkgs
 RUN apt-get update \
-    && apt-cache pkgnames | awk '/-dbgsym$/ {next } /^ros-dashing-/ { print }' > /tmp/ros2pkgs \:
+    && apt-cache pkgnames | awk '/-dbgsym$/ {next } /^ros-dashing-/ { print }' > /tmp/ros2pkgs \
     && apt-get install -y apt-rdepends $(cat /tmp/ros2pkgs) \
     && rm -rf /var/lib/apt/lists/*
 ENV pkgs=$pkgs
