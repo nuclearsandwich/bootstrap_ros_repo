@@ -1,7 +1,8 @@
 FROM osrf/ros:dashing-desktop
 ARG pkgs
 RUN apt-get update \
-    && apt-get install -y ros-dashing-desktop apt-rdepends \
+    && apt-cache pkgnames | awk '/-dbgsym$/ {next } /^ros-dashing-/ { print }' > /tmp/ros2pkgs \:
+    && apt-get install -y apt-rdepends $(cat /tmp/ros2pkgs) \
     && rm -rf /var/lib/apt/lists/*
 ENV pkgs=$pkgs
 ENTRYPOINT /usr/bin/apt-rdepends -r ${pkgs} | grep 'Reverse Depends:' | awk '{print $3}' | sort | uniq | tr '\r\n' ',' | sed 's:,:, :g'
