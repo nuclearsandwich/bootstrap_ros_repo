@@ -40,7 +40,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Reverse dependencies Xenial ${{steps.short-name.outputs.id}}
+          name: Reverse dependencies Kinetic-Xenial ${{steps.short-name.outputs.id}}
           path: reverse_deps.txt
 
   melodic-bionic-ci:
@@ -76,7 +76,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Reverse dependencies Bionic ${{steps.short-name.outputs.id}}
+          name: Reverse dependencies Melodic-Bionic ${{steps.short-name.outputs.id}}
           path: reverse_deps.txt
 
   dashing-bionic-ci:
@@ -112,7 +112,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Reverse dependencies Bionic ${{steps.short-name.outputs.id}}
+          name: Reverse dependencies Dashing-Bionic ${{steps.short-name.outputs.id}}
           path: reverse_deps.txt
 
   noetic-focal-ci:
@@ -148,7 +148,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Reverse dependencies Focal ${{steps.short-name.outputs.id}}
+          name: Reverse dependencies Noetic-Focal ${{steps.short-name.outputs.id}}
           path: reverse_deps.txt
 
   foxy-focal-ci:
@@ -184,5 +184,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Reverse dependencies Focal ${{steps.short-name.outputs.id}}
+          name: Reverse dependencies Foxy-Focal ${{steps.short-name.outputs.id}}
           path: reverse_deps.txt
